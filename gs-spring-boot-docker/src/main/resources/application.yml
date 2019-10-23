@@ -1,0 +1,28 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+
+#TODO: figure out why I need this here and in bootstrap.yml
+spring:
+  application:
+    name: testLatticeApp
+  jpa:
+     database: MYSQL
+     hibernate:
+        ddl-auto: validate
+  datasource:
+      url: jdbc:mysql://mysql:3306/grupo_topen
+      username: admin
+      password: admin
+      driver-class-name: com.mysql.jdbc.Driver
+           
+ribbon:
+  ServerListRefreshInterval: 1000
+
+endpoints:
+  health:
+    sensitive: false
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
