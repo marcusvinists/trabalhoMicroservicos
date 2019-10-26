@@ -1,14 +1,16 @@
-version: '2'
+version: '2.1'
 services:
 
   api:
     build: gs-spring-boot-docker/.
     ports:
       - "8080:8080"
+    restart: on-failure:6 
     links:
       - mysql
     depends_on:
-      - mysql
+        mysql:
+            condition: service_healthy
 
   mysql:
     build: mysql/.
@@ -17,6 +19,13 @@ services:
     volumes:
       - /var/lib/mysql
     environment:
-       MYSQL_ROOT_PASSWORD: senhaFiap
-       MYSQL_USER: root
-       MYSQL_DATABASE: fiapdb
+       MYSQL_ROOT_PASSWORD: admin
+       MYSQL_USER: admin
+       MYSQL_DATABASE: GRUPO_TOPEN
+       MYSQL_PASSWORD: admin
+    healthcheck:
+      test: ["CMD-SHELL", 'mysqladmin ping']
+      interval: 10s
+      timeout: 2s
+      retries: 10
+
